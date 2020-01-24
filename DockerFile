@@ -1,13 +1,20 @@
-# We specify the base image we need for our
-# go application
-FROM golang:1.12.0-alpine3.9
-# We specify that we now wish to execute 
-# any further commands inside our /app
-# directory
-WORKDIR .
-# we run go build to compile the binary
-# executable of our Go program
-RUN go build -o main .
-# Our start command which kicks off
-# our newly created binary executable
-CMD ["WikiGoApp"]
+
+
+FROM golang:alpine3.9
+FROM node:alpine
+
+WORKDIR $GOPATH/src/github.com/sauravsehgal24/WikiGoApp
+# RUN export PATH=$PATH:/usr/local/go/bin
+
+# WORKDIR /go/src/WikiGoApp/client
+# # RUN mkdir client
+# # WORKDIR /go/src/WikiGoApp/client
+# ADD ./client/ .
+# RUN npm install
+# RUN npm run build
+# WORKDIR /go/src/WikiGoApp/
+
+ADD . .
+RUN go get
+RUN go build
+RUN ls 

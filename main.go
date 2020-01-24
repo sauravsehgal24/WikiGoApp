@@ -119,7 +119,7 @@ func main(){
 	r.HandleFunc("/api/articles/{name}", updateArticles).Methods("PUT")
 
 	//serve client UI at '/' route
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./client/build/")))
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./build/")))
 
 	//server running
 	log.Fatal(http.ListenAndServe(":3002", handlers.CORS()(r)))
