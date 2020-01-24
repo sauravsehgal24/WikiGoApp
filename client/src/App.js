@@ -1,11 +1,9 @@
 import React from 'react';
-import './App.css';
+import SplashPage from './components/splashPage/splashPage';
 
 function App() {
   return (
-    <div className="App">
-      Wiki App
-    </div>
+    <SplashPage />
   );
 }
 

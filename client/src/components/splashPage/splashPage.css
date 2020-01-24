@@ -1,0 +1,7 @@
+.splashPageContainer{
+    display: flex;
+    flex-direction: column;
+    margin-top:6%;
+    align-items: center;
+    height:80vh;
+}

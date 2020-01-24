@@ -6,6 +6,7 @@ import(
 	"fmt"
 	"net/http"
 	"github.com/gorilla/mux"
+	"github.com/gorilla/handlers"
 )
 
 //Model --------------------------------------------------------------------------------------------
@@ -39,6 +40,11 @@ func _getArticleWithName(articleNameFromParam string) (foundedArticle Article, p
 }
 // ------------------------------------------------------------------------------------------------
 
+// Enable CORS ------------------------------------------------------------------------------------
+func enableCors(w *http.ResponseWriter) {
+	(*w).Header().Set("Access-Control-Allow-Origin", "*")
+}
+// ------------------------------------------------------------------------------------------------
 
 //Endpoint request handlers -----------------------------------------------------------------------
 
@@ -68,10 +74,11 @@ func getSpecificArticle(w http.ResponseWriter, r *http.Request){
 //If already exists then update otherwise append it in the array
 func updateArticles(w http.ResponseWriter, r *http.Request){
 
+	enableCors(&w)
 	params := mux.Vars(r)
+	fmt.Printf("%s", params["name"]);
 	var article Article 
 	_ = json.NewDecoder(r.Body).Decode(&article)
-	
 	foundedArticle,place := _getArticleWithName(params["name"])
 
 	if(foundedArticle == Article{}){
@@ -82,7 +89,7 @@ func updateArticles(w http.ResponseWriter, r *http.Request){
 		json.NewEncoder(w).Encode(articles)
 	}
 	
-	fmt.Printf("%s", params["name"]);
+	
 
 }
 
@@ -111,7 +118,7 @@ func main(){
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./client/build/")))
 
 	//server running
-	log.Fatal(http.ListenAndServe(":3002", r))
+	log.Fatal(http.ListenAndServe(":3002", handlers.CORS()(r)))
 
 }
 
