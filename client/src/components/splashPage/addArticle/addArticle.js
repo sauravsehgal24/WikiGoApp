@@ -8,29 +8,32 @@ export default function AddArticle(props) {
 
   const [name, setName] = useState('')
   const [author, setAuthor] = useState('')
+  const [genere, setGenere] = useState('')
 
   const bindInput = (e,input) => {
         if(input === "Name"){
             setName(e.target.value); 
-           
+        }
+        else if(input === "Author"){
+            setAuthor(e.target.value); 
         }
         else{
-            setAuthor(e.target.value); 
-        
+            setGenere(e.target.value); 
         }
   }
 
   const addArticle = () =>{
-    console.log(`name: ${name}  author=${author}`)
+    console.log(`name: ${name}  author=${author} genere=${genere}`)
     const payload = {
         name,
-        author
+        author,
+        genere
     }
 
     axios
       .put("/api/articles/"+name , payload)
       .then(res => {
-          console.log(res)
+        console.log(res)
         props.history.push('/')
       })
       .catch(err => {
@@ -61,6 +64,17 @@ export default function AddArticle(props) {
                 aria-label="Author"
                 aria-describedby="basic-addon1"
                 onChange={(e)=>{bindInput(e,'Author')}}
+                />
+            </InputGroup>
+
+            <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                <InputGroup.Text id="basic-addon1">Genere</InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl
+                aria-label="Genere"
+                aria-describedby="basic-addon1"
+                onChange={(e)=>{bindInput(e,'Genere')}}
                 />
             </InputGroup>
             <Button variant="primary" size="lg" onClick={()=>addArticle()}>Add</Button>

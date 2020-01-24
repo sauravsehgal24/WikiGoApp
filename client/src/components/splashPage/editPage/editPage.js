@@ -7,15 +7,22 @@ import { Link } from "react-router-dom";
 export default function EditArticle(props) {
 
   const [author, setAuthor] = useState('')
+  const [genere, setGenere] = useState('')
 
   const bindInput = (e,input) => {
-            setAuthor(e.target.value); 
+      if(input === "Author"){
+        setAuthor(e.target.value); 
+      }
+      else{
+          setGenere(e.target.value);
+      }
   }
 
   const editArticle = () =>{
     const payload = {
         name:props.match.params.name,
-        author
+        author,
+        genere
     }
 
     axios
@@ -32,7 +39,7 @@ export default function EditArticle(props) {
   return (
     <React.Fragment>
         <Card>
-            <h1>Edit Article {props.match.params.name}</h1>
+            <h1>Edit Article <i>"{props.match.params.name}"</i></h1>
             <InputGroup className="mb-3">
                 <InputGroup.Prepend>
                 <InputGroup.Text id="basic-addon1">Name</InputGroup.Text>
@@ -53,6 +60,17 @@ export default function EditArticle(props) {
                 aria-label="Author"
                 aria-describedby="basic-addon1"
                 onChange={(e)=>{bindInput(e,'Author')}}
+                />
+            </InputGroup>
+
+            <InputGroup className="mb-3">
+                <InputGroup.Prepend>
+                <InputGroup.Text id="basic-addon1">Genere</InputGroup.Text>
+                </InputGroup.Prepend>
+                <FormControl
+                aria-label="Genere"
+                aria-describedby="basic-addon1"
+                onChange={(e)=>{bindInput(e,'Genere')}}
                 />
             </InputGroup>
             <Button variant="primary" size="lg" onClick={()=>editArticle()}>Update</Button>

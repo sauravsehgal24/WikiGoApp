@@ -31,6 +31,7 @@ export default function Article(props) {
         </Link>
       </h1>
       <h3>Author: {articleState.article.author}</h3>
+      <h3>Genere: {articleState.article.genere}</h3>
     </React.Fragment>
   );
 }

@@ -13,6 +13,7 @@ import(
 type Article struct {
 	Name string `json:"name"`
 	Author string `json:"author"`
+	Genere string `json:"genere"`
 }
 type Articles []Article
 
@@ -25,7 +26,6 @@ var articles Articles
 //Helper method to see if the article exists with particular name ---------------------------------
 //Return: founded article and its index
 func _getArticleWithName(articleNameFromParam string) (foundedArticle Article, place int) {
-
 	foundArticle := Article{}
 	count := 0
 	for i := 0; i < len(articles); i++ {
@@ -34,9 +34,7 @@ func _getArticleWithName(articleNameFromParam string) (foundedArticle Article, p
 			count = i
 		}
 	}
-
 	return foundArticle,count
-
 }
 // ------------------------------------------------------------------------------------------------
 
@@ -83,10 +81,12 @@ func updateArticles(w http.ResponseWriter, r *http.Request){
 
 	if(foundedArticle == Article{}){
 		articles = append(articles, article)
-		json.NewEncoder(w).Encode(articles)
+		//json.NewEncoder(w).Encode(articles)
+		w.WriteHeader(http.StatusCreated)
 	} else {
 		articles[place] = article
-		json.NewEncoder(w).Encode(articles)
+		//json.NewEncoder(w).Encode(articles)
+		w.WriteHeader(http.StatusOK)
 	}
 	
 	
@@ -101,9 +101,13 @@ func main(){
 	
 	//dummy data initialization
 	articles = Articles{
-		Article{Name:"test1", Author:"jon1"},
-		Article{Name:"test2", Author:"jon2"},
-		Article{Name:"test3", Author:"jon3"},
+		Article{Name:"New Year", Author:"John", Genere:"Social"},
+		Article{Name:"Who is who", Author:"Saurav", Genere:"Social"},
+		Article{Name:"Build full-stack app", Author:"Shaun", Genere:"Tech"},
+		Article{Name:"Comedy Time", Author:"Russel peters", Genere:"Comedy"},
+		Article{Name:"Time Machine", Author:"Nolan", Genere:"Sci-Fi"},
+		Article{Name:"Old Days", Author:"saurav", Genere:"Social"},
+		Article{Name:"Music Top Hits 2019", Author:"Billboard", Genere:"Music"},
 	}
 
 	//init router
