@@ -3,7 +3,7 @@ import React, { Component, useState, useEffect } from "react";
 import axios from "axios";
 import { Button, Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
-
+ 
 export default function Article(props) {
   var [articleState, setArticleState] = useState({
     article: {}

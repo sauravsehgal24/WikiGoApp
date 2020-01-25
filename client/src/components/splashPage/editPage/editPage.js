@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 
 export default function EditArticle(props) {
 
+  const [name, setName] = useState('')
   const [author, setAuthor] = useState('')
   const [genere, setGenere] = useState('')
 
@@ -13,14 +14,17 @@ export default function EditArticle(props) {
       if(input === "Author"){
         setAuthor(e.target.value); 
       }
-      else{
+      else if(input === "Genere"){
           setGenere(e.target.value);
       }
+      else{
+        setName(e.target.value);
+    }
   }
 
   const editArticle = () =>{
     const payload = {
-        name:props.match.params.name,
+        name,
         author,
         genere
     }
@@ -35,7 +39,7 @@ export default function EditArticle(props) {
         console.log(err)
       });
   }
-
+ 
   return (
     <React.Fragment>
         <Card>
@@ -47,8 +51,7 @@ export default function EditArticle(props) {
                 <FormControl
                 aria-label="Name"
                 aria-describedby="basic-addon1"
-                disabled
-                value={props.match.params.name}
+                onChange={(e)=>{bindInput(e,'Name')}}
                 />
             </InputGroup>
 

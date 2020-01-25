@@ -9,7 +9,7 @@ import AllArticles from "./allArticlesPage/allArticles";
 import Article from "./articlePage/article";
 import AddArticle from './addArticle/addArticle';
 import EditArticle from './editPage/editPage';
-
+ 
 //files
 import "./splashPage.css";
 

@@ -2,8 +2,8 @@
 
 FROM golang:alpine3.9
 FROM node:alpine
-
-WORKDIR $GOPATH/src/github.com/sauravsehgal24/WikiGoApp
+RUN ls
+# WORKDIR $GOPATH/src/github.com/sauravsehgal24/WikiGoApp
 # RUN export PATH=$PATH:/usr/local/go/bin
 
 # WORKDIR /go/src/WikiGoApp/client
@@ -14,7 +14,7 @@ WORKDIR $GOPATH/src/github.com/sauravsehgal24/WikiGoApp
 # RUN npm run build
 # WORKDIR /go/src/WikiGoApp/
 
-ADD . .
-RUN go get
-RUN go build
-RUN ls 
+# ADD . .
+# RUN go get
+# RUN go build
+# RUN ls 

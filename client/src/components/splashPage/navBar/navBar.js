@@ -4,7 +4,7 @@ import { Route, Link, BrowserRouter as Router } from "react-router-dom";
 import "./navBar.css";
 
 export default function NavBar() {
-
+ 
   const [navHeading, setNavHeading] = useState('All Articles');
 
   const setNavHeadingFunc = function (name){

@@ -5,7 +5,7 @@ import { Button, InputGroup, FormControl, Card } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 export default function AddArticle(props) {
-
+  
   const [name, setName] = useState('')
   const [author, setAuthor] = useState('')
   const [genere, setGenere] = useState('')
