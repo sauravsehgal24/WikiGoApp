@@ -7,4 +7,4 @@ it("SplashPage renders successfully", ()=>{
     const div = document.createElement('div');
     ReactDom.render(<Router><SplashPage></SplashPage></Router>,div)
     ReactDom.unmountComponentAtNode(div) 
-})
+}) 
