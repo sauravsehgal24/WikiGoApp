@@ -1,20 +1,16 @@
+FROM golang:1.13.6
+WORKDIR /
+RUN go version
+RUN mkdir -p app/WikiGoApp/client/build
+WORKDIR /home/app/WikiGoApp/client/build
+ADD ./client/build .
 
-
-FROM golang:alpine3.9
-FROM node:alpine
-RUN ls
-# WORKDIR $GOPATH/src/github.com/sauravsehgal24/WikiGoApp
-# RUN export PATH=$PATH:/usr/local/go/bin
-
-# WORKDIR /go/src/WikiGoApp/client
-# # RUN mkdir client
-# # WORKDIR /go/src/WikiGoApp/client
-# ADD ./client/ .
-# RUN npm install
-# RUN npm run build
-# WORKDIR /go/src/WikiGoApp/
-
-# ADD . .
-# RUN go get
-# RUN go build
-# RUN ls 
+WORKDIR /home/app/WikiGoApp
+ADD ./main.go .
+RUN go mod init github.com/sauravsehgal24/WikiGoApp
+RUN go mod download
+RUN go get
+RUN go build main.go
+EXPOSE 8080
+ENTRYPOINT ["./main"]
+RUN ls 
