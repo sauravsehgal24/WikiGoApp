@@ -106,7 +106,7 @@ func main(){
 	r.HandleFunc("/api/articles/{name}", getSpecificArticle).Methods("GET")
 	r.HandleFunc("/api/articles/{name}", updateArticles).Methods("PUT")
 
-	// serve client UI at '/' route
+	// serve client UI at '/' route 
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./client/build/")))
 
 	// server running
