@@ -1,68 +1,47 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# WikiGoApp
+A Full-Stack Web App to display info about top articles of all time. Checkout the Web App here: [https://wikigoapptest.herokuapp.com/](https://wikigoapptest.herokuapp.com/)
 
-## Available Scripts
+## Tech Stack
+ReactJS, GoLang, DockerCLI, HerokuCLI
 
-In the project directory, you can run:
+## Developer configuration
 
-### `npm start`
+### *prerequisites*
+- Node
+- npm
+- GO:1.13.6(to run go mod) or lower version for regular dependency management
+- Docker 
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### How to set up the project to run on local machine?
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Front-End
+1. Clone the project from master to your ***go/src*** directory or to any directory if you are using GO:1.13.6 (installing dependencies via mod command)
+2. Your root folder should be ***/WikiGoApp***
+3. Navigate to ***WikiGoApp/client***
+4. Run ```npm install``` in the terminal or cmd to install all the React dependencies
+5. Run ```npm run test``` in the terminal or cmd to test the UI rendering
+6. Run ```npm run build``` -> in the terminal or cmd. A "build" folder inside of ***/WikiGoApp/client*** should be generated
 
-### `npm test`
+### Back-End
+1. Navigate to ***/WikiGoApp***
+2. Run ``` go mod download``` (GO:1.13.6) in the terminal or cmd
+3. Run ```go get``` in the terminal or cmd
+4. Run ```go test``` in the terminal or cmd to verify that all the tests are passing
+5. Run ```go build``` -> in the terminal or cmd. A file should be generated named "main" or "WikiGoApp"
+6. Run ```./main``` or ```./WikiGoApp``` (based on the file name generated in step 5) in the terminal or cmd
+7. Open browser and navigate to ```http://localhost:8080``` and explore
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Running in Docker Container
+1. Open the terminal or cmd and type ```docker pull sauravsehgal24/md-wiki:2019```
+2. Run ```docker images``` to check if the image from step 1 is installed correctly
+3. Run ```docker run -t -p 8080:8080 sauravsehgal24/md-wiki:2019``` to start the container
+4. Open browser and navigate to ```http://localhost:8080``` and explore
+5. Press `ctrl + c` to exit out of the terminal or cmd
+5. Run ```docker ps``` to see the container id of the running container
+5. To stop the container run ```docker stop <Container id>```
 
-### `npm run build`
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
