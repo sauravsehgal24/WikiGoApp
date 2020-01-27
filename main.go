@@ -4,6 +4,7 @@ import(
 	"encoding/json"
 	"log"
 	"net/http"
+	"os"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/handlers"
 )
@@ -110,7 +111,8 @@ func main(){
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./client/build/")))
 
 	// server running
-	log.Fatal(http.ListenAndServe(":3000", handlers.CORS()(r)))
+	port := os.Getenv("PORT") 
+	log.Fatal(http.ListenAndServe(":"+port, handlers.CORS()(r)))
 
 }
 
