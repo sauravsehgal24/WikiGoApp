@@ -110,7 +110,7 @@ func main(){
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./client/build/")))
 
 	// server running
-	log.Fatal(http.ListenAndServe(":8080", handlers.CORS()(r)))
+	log.Fatal(http.ListenAndServe(":3000", handlers.CORS()(r)))
 
 }
 
