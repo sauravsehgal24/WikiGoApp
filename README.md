@@ -7,10 +7,10 @@ ReactJS, GoLang, DockerCLI, HerokuCLI
 ## Developer configuration
 
 ### *prerequisites*
-. Node
-. npm
-. GO:1.13.6(to run go mod) or lower version for regular dependency management
-. Docker 
+- Node
+- npm
+- GO:1.13.6(to run go mod) or lower version for regular dependency management
+- Docker 
 
 ### How to set up the project to run on local machine?
 
