@@ -28,7 +28,7 @@ ReactJS, GoLang, DockerCLI, HerokuCLI
 3. Run ```go get``` in the terminal or cmd
 4. Run ```go test``` in the terminal or cmd to verify that all the tests are passing
 5. Run ```go build``` -> in the terminal or cmd. A file should be generated named "main" or "WikiGoApp"
-6. Run ```./main``` or ```./WikiGoApp``` (based on the file name generated in step 4) in the terminal or cmd
+6. Run ```./main``` or ```./WikiGoApp``` (based on the file name generated in step 5) in the terminal or cmd
 7. Open browser and navigate to ```http://localhost:8080``` and explore
 
 ### Running in Docker Container
