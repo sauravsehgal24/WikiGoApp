@@ -111,8 +111,15 @@ func main(){
 	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./client/build/")))
 
 	// server running
-	port := os.Getenv("PORT") 
-	log.Fatal(http.ListenAndServe(":"+port, handlers.CORS()(r)))
+	//port := "3000" 
+	
+	// if(port != ""){
+	// 	port := os.Getenv("PORT")
+	// }else{
+	// 	port := "3002" 
+	// }
+
+	log.Fatal(http.ListenAndServe(":"+os.Getenv("PORT"), handlers.CORS()(r)))
 
 }
 
