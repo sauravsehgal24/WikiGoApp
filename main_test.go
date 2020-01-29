@@ -4,25 +4,22 @@ import(
 	"testing"
 	"bytes"
 	"encoding/json"
-	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"
-	"github.com/gorilla/mux"
 )
 
 // Initialize router for tests
-func Router() *mux.Router{
-	router := mux.NewRouter()
-	router.HandleFunc("/api/articles", getArticles).Methods("GET")
-	router.HandleFunc("/api/articles/{name}", getSpecificArticle).Methods("GET")
-	router.HandleFunc("/api/articles/{name}", updateArticles).Methods("PUT")
-	return router
+func HttpRouter() http.Handler{
+	mux := http.NewServeMux()
+	mux.HandleFunc("/api/articles", getArticles)
+	mux.HandleFunc("/api/articles/", manipulateSpecificArticle)
+	return mux
 }
 
 // Execute new request for every implementation
 func executeNewRequest(request *http.Request) *httptest.ResponseRecorder {
 	response := httptest.NewRecorder()
-    Router().ServeHTTP(response,request)
+    HttpRouter().ServeHTTP(response,request)
     return response
 }
 
@@ -45,8 +42,10 @@ func TestGetAllArticles(t *testing.T){
 		response := executeNewRequest(request)
 		var articles Articles
 		_ = json.NewDecoder(response.Body).Decode(&articles)
-		assert.Equal(t,tc.expectation,response.Code,tc.message)
-		assert.Equal(t,tc.bodyLength,len(articles),tc.message)
+
+		if(tc.expectation != response.Code || tc.bodyLength != len(articles)){
+			t.Errorf(tc.message)
+		}
 	}
 
 }
@@ -58,15 +57,17 @@ func TestGetArticleByName(t *testing.T){
 		expectation int
 		message string
 	}{
-		{"/api/articles/New Year",200,"Expecting OK"},
-		{"/api/jam",404, "Expecting Not Found"},
+		{"/api/articles/?name=New Year",200,"Expecting OK"},
+		{"/api/?name=jam",404, "Expecting Not Found"},
 		{"/articles/fdfads",404, "Expecting Not Found"},
 	}
 
 	for _, tc := range tt {
 		request , _ := http.NewRequest("GET",tc.url, nil) 
 		response := executeNewRequest(request)
-		assert.Equal(t,tc.expectation,response.Code,tc.message)
+		if(tc.expectation != response.Code){
+			t.Errorf(tc.message)
+		}
 	}
 
 	
@@ -80,8 +81,8 @@ func TestUpdateArticle(t *testing.T){
 		expectation int
 		message string
 	}{
-		{"/api/articles/New Year",200,"Expecting Updated OK"},
-		{"/api/articles/What is What",201, "Expecting Created"},
+		{"/api/articles/?name=New Year",200,"Expecting Updated OK"},
+		{"/api/articles/?name=What is What",201, "Expecting Created"},
 		{"/articles/fdfads",404, "Expecting Not Found"},
 	}
 	for _, tc := range tt {
@@ -92,7 +93,9 @@ func TestUpdateArticle(t *testing.T){
 		}) 
 	   request , _ := http.NewRequest("PUT", tc.url, bytes.NewBuffer(reqBody)) 
 	   response := executeNewRequest(request)
-	   assert.Equal(t,tc.expectation,response.Code,tc.message)
+	   if(tc.expectation != response.Code){
+		t.Errorf(tc.message)
+	}
 	}
 	 
 }

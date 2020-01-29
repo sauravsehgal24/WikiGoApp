@@ -31,7 +31,7 @@ export default function AddArticle(props) {
     }
 
     axios
-      .put("/api/articles/"+name , payload)
+      .put("/api/articles/?name="+name , payload)
       .then(res => {
         console.log(res)
         props.history.push('/')

@@ -4,8 +4,6 @@ import(
 	"encoding/json"
 	"log"
 	"net/http"
-	"github.com/gorilla/mux"
-	"github.com/gorilla/handlers"
 )
 
 // Model --------------------------------------------------------------------------------------------
@@ -25,6 +23,7 @@ var articles Articles = Articles{
 	Article{Name:"Time Machine", Author:"Nolan", Genere:"Sci-Fi"},
 	Article{Name:"Old Days", Author:"saurav", Genere:"Social"},
 	Article{Name:"Music Top Hits 2019", Author:"Billboard", Genere:"Music"},
+	Article{Name:"rest_api", Author:"saurav", Genere:"Tech"},
 }
 
 // -------------------------------------------------------------------------------------------------
@@ -55,40 +54,51 @@ func enableCors(w *http.ResponseWriter) {
 
 // Get all articles
 func getArticles(w http.ResponseWriter, r *http.Request){
-
-	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(articles)
+	enableCors(&w)
+	switch r.Method {
+	case "GET":
+		w.Header().Set("Content-Type", "application/json")
+		json.NewEncoder(w).Encode(articles)
+	default:
+		http.Error(w, "Not Found", 404)
+	}
 }
 
 // Get specific article 
 // If found then return it else return error status
-func getSpecificArticle(w http.ResponseWriter, r *http.Request){
-	params := mux.Vars(r)
-	foundedArticle,_ := h_getArticleWithName(params["name"])
-	//return the founded article in response and if its empty then return error status and message 
-	if(foundedArticle != Article{}){
-		json.NewEncoder(w).Encode(foundedArticle)
-	} else {
-		http.Error(w, "Not Found", 404)
-	}
-	 
-}
-
-// Update the article
-// If already exists then update otherwise append it in the array
-func updateArticles(w http.ResponseWriter, r *http.Request){
+func manipulateSpecificArticle(w http.ResponseWriter, r *http.Request){
 	enableCors(&w)
-	params := mux.Vars(r)
-	var article Article 
-	_ = json.NewDecoder(r.Body).Decode(&article)
-	foundedArticle,place := h_getArticleWithName(params["name"])
+	param := r.URL.Query()["name"][0]
 
-	if(foundedArticle == Article{}){
-		articles = append(articles, article)
-		w.WriteHeader(http.StatusCreated)
-	} else {
-		articles[place] = article
-		w.WriteHeader(http.StatusOK)
+	switch r.Method {
+	case "GET":
+		
+		foundedArticle,_ := h_getArticleWithName(param)
+
+		if(foundedArticle != Article{}){
+			//return the founded article in response and if its empty then return error status and message 
+			json.NewEncoder(w).Encode(foundedArticle)
+		} else {
+			http.Error(w, "Not Found", 404)
+		}
+
+	// Update the article
+	// If already exists then update otherwise append it in the array
+	case "PUT":
+		var article Article 
+		_ = json.NewDecoder(r.Body).Decode(&article)
+		foundedArticle,place := h_getArticleWithName(param)
+
+		if(foundedArticle == Article{}){
+			articles = append(articles, article)
+			w.WriteHeader(http.StatusCreated)
+		} else {
+			articles[place] = article
+			w.WriteHeader(http.StatusOK)
+		}
+
+	default:
+		http.Error(w, "Not Found", 404)
 	}
 }
 
@@ -99,19 +109,16 @@ func updateArticles(w http.ResponseWriter, r *http.Request){
 func main(){
 
 	// init router
-	r := mux.NewRouter()
-
+	mux := http.NewServeMux()	
 	// route api endpoints
-	r.HandleFunc("/api/articles", getArticles).Methods("GET")
-	r.HandleFunc("/api/articles/{name}", getSpecificArticle).Methods("GET")
-	r.HandleFunc("/api/articles/{name}", updateArticles).Methods("PUT")
+	mux.HandleFunc("/api/articles", getArticles)
+	mux.HandleFunc("/api/articles/", manipulateSpecificArticle)
 
 	// serve client UI at '/' route 
-	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./client/build/")))
-
+	mux.Handle("/", http.StripPrefix("/", http.FileServer(http.Dir("./client/build/"))))
 	// server running
-	port := "3000" 
-	log.Fatal(http.ListenAndServe(":"+port, handlers.CORS()(r)))
+	port := "8080" 
+	log.Fatal(http.ListenAndServe(":"+port, mux))
 
 }
 

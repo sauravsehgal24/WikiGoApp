@@ -11,7 +11,7 @@ export default function Article(props) {
 
   useEffect(() => {
     axios
-      .get("/api/articles/" + props.match.params.name)
+      .get("/api/articles/?name=" + props.match.params.name)
       .then(res => {
         console.log(res);
         const { data: article } = res;

@@ -1,17 +1,17 @@
-FROM golang:1.13.6
-WORKDIR /
-RUN go version
-RUN mkdir -p app/WikiGoApp/client/build
-WORKDIR /home/app/WikiGoApp/client/build
-ADD ./client/build .
+FROM ubuntu:14.04
 
-WORKDIR /home/app/WikiGoApp
-ADD ./main.go .
-RUN go mod init github.com/sauravsehgal24/WikiGoApp
-RUN go mod download
-RUN go get
-RUN go build main.go
+MAINTAINER saurav
+
+RUN apt-get update
+RUN apt-get install -y nginx
+RUN apt-get install -y golang-go
+RUN apt-get install -y npm
+
+WORKDIR /home/app
+ADD . .
+
+WORKDIR /home/app
+RUN go build
 EXPOSE 8080
-ENTRYPOINT ["./main"]
-RUN ls 
-   
+ENTRYPOINT ["./app"]
+

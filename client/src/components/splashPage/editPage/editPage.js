@@ -30,7 +30,7 @@ export default function EditArticle(props) {
     }
 
     axios
-      .put("/api/articles/"+props.match.params.name , payload)
+      .put("/api/articles/?name="+props.match.params.name , payload)
       .then(res => {
           console.log(res)
         props.history.push('/')
