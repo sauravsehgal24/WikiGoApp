@@ -24,12 +24,10 @@ ReactJS, GoLang, DockerCLI, HerokuCLI
 
 ### Back-End
 1. Navigate to ***/WikiGoApp***
-2. Run ``` go mod download``` (GO:1.13.6) in the terminal or cmd
-3. Run ```go get``` in the terminal or cmd
-4. Run ```go test``` in the terminal or cmd to verify that all the tests are passing
-5. Run ```go build``` -> in the terminal or cmd. A file should be generated named "main" or "WikiGoApp"
-6. Run ```./main``` or ```./WikiGoApp``` (based on the file name generated in step 5) in the terminal or cmd
-7. Open browser and navigate to ```http://localhost:8080``` and explore
+2. Run ```go test``` in the terminal or cmd to verify that all the tests are passing
+3. Run ```go build``` -> in the terminal or cmd. A file should be generated named "main" or "WikiGoApp"
+4. Run ```./main``` or ```./WikiGoApp``` (based on the file name generated in step 5) in the terminal or cmd
+5. Open browser and navigate to ```http://localhost:8080``` and explore
 
 ### Running in Docker Container
 1. Open the terminal or cmd and type ```docker pull sauravsehgal24/md-wiki:2019```
@@ -38,7 +36,7 @@ ReactJS, GoLang, DockerCLI, HerokuCLI
 4. Open browser and navigate to ```http://localhost:8080``` and explore
 5. Press `ctrl + c` to exit out of the terminal or cmd
 5. Run ```docker ps``` to see the container id of the running container
-5. To stop the container run ```docker stop <Container id>```
+6. To stop the container run ```docker stop <Container id>```
 
 
 

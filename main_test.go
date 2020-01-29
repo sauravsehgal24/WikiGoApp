@@ -32,7 +32,7 @@ func TestGetAllArticles(t *testing.T){
 		expectation int
 		message string
 	}{
-		{"/api/articles",7,200,"Expecting OK"},
+		{"/api/articles",8,200,"Expecting OK"},
 		{"/api/asdarticles",0,404, "Expecting Not Found"},
 		{"/articles",0, 404, "Expecting Not Found"},
 	}
